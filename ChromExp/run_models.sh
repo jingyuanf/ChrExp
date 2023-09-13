@@ -17,8 +17,8 @@ module load R/4.1.0-DS
 ############### PARAMETERS AND DIRECTORIES ################
 ## LOCATION OF R FILE TO RUN
 code_dir="./ChromExp/"
-train_across_file_name="${code_dir}/train_across_model_w_gene_exp_sampled_reg_tree.R"
-test_across_file_name="${code_dir}/test_across_model_w_gene_exp_sampled_reg_tree.R"
+train_across_file_name="${code_dir}/train_model.R"
+test_across_file_name="${code_dir}/test_model.R"
 clean_intermediate_file_name="${code_dir}/clean_intermediate.R"
 combine_across_file_name="${code_dir}/combine_results.R"
 
