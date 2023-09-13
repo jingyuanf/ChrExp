@@ -88,16 +88,8 @@ Two options:
 2. Use "ChromImpute/generate_full_mark_table.sh" to generate a full mark table.
 3. Then run "ChromImpute/generate_individual_mark_tables.sh" to produce mark tables specifically for each imputation task.
 
-## Step 4: Run ChromImpute model (Chromatin Signal -> Gene expression)
 
-Run "ChromImpute/batch_chromimpute.sh"
-TODO: Note that for "ComputeGlobalDist", I only computed distance based on RNA marker (using -m command). Output distance files stored separately for each mark.
-
-TODO: Note that "GenerateTrainData" currently uses "-c chr1" which generates train data for chromosome 1 only. But the predictions are made over all chromosomes. Later will need to make predictions on whole genome using whole genome train data
-
-Run "ChromImpute/wigtobw.sh" to convert wig outputs to bw outputs.
-
-## Step 5: Post-process
+## Step 4: Post-process
 
 Run "postprocess_epimap/deconvolve_pred.sh" to generate formatted outputs and deconvolved outputs.
 
