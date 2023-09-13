@@ -62,7 +62,7 @@ Run "/preprocess_epimap/remove_duplicates_and_quantile_normalize.sh"
 
 Run "preprocess_epimap/preprocess_atlas_gene.sh". Right now it is processing the data by making 200 bp bins. 
 
-## Step 2: Run ChrExp model (Gene expression -> Chromatin Signal)
+## Step 2: Run ChromExp model (Gene expression -> Chromatin Signal)
 
 Run "ChromExp/run_models.sh", run "train_model.R" first and then run "test_model.R" next.
 
