@@ -32,20 +32,20 @@ rm_dup <- opt$rm_dup
 # mark = "H3K36me3"
 
 ### READ IN GENE EXP AND CHROMATIN SIGNAL INFORMATION
-ATLAS_GENE <- readRDS("./Correct_data/epimap-gene-exp/FULL-ATLAS-EPIMAP-HG19-RNA-GENEID-LOG2FPKM.rds")
-ATLAS_CHIP <- readRDS(file.path("Correct_data", sprintf("epimap-%s-hg19", mark), sprintf("FULL-ATLAS-EPIMAP-HG19-%s-RAW.rds", mark)))
+ATLAS_GENE <- readRDS("./data/epimap-gene-exp/FULL-ATLAS-EPIMAP-HG19-RNA-GENEID-LOG2FPKM.rds")
+ATLAS_CHIP <- readRDS(file.path("data", sprintf("epimap-%s-hg19", mark), sprintf("FULL-ATLAS-EPIMAP-HG19-%s-RAW.rds", mark)))
 
 ### GET CELL TYPE NAMES FROM GENE EXPRESSION AND CHROMATIN SIGNAL 
 celltypes_exp <- colnames(ATLAS_GENE)
 celltypes_chip <- colnames(mcols(ATLAS_CHIP))
 celltypes_overlap <- intersect(celltypes_exp, celltypes_chip)
 
-saveRDS(celltypes_overlap, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), sprintf("all-celltypes-with-dup-%s.rds", mark)))
-writeLines(celltypes_overlap, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), sprintf("all-celltypes-with-dup-%s.txt", mark)))
+saveRDS(celltypes_overlap, file.path("data", sprintf("epimap-%s-hg19", mark), sprintf("all-celltypes-with-dup-%s.rds", mark)))
+writeLines(celltypes_overlap, file.path("data", sprintf("epimap-%s-hg19", mark), sprintf("all-celltypes-with-dup-%s.txt", mark)))
 
 ### GET ANNOTATION FOR EPIMAP CELLTYPES
 if (rm_dup){
-  epimap_meta <- as.data.frame(read_excel("./Data_info/Imputation_Metadata.xlsx"))
+  epimap_meta <- as.data.frame(read_excel("./data/Imputation_Metadata.xlsx"))
 
   ### FROM OVERLAPPING CELL TYPES, REMOVE DUPLICATED ONES
   ### PS: Duplicated cell types are defined by "Extended Info", "Lifestage", "Age", "AgeUnits", "Sex", "Project"
@@ -62,8 +62,8 @@ if (rm_dup){
 
   celltypes_rm_dup <- celltypes_overlap[unique_ind]
 
-  saveRDS(celltypes_rm_dup, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), sprintf("all-celltypes-non-dup-%s.rds", mark)))
-  writeLines(celltypes_rm_dup, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), sprintf("all-celltypes-non-dup-%s.txt", mark)))
+  saveRDS(celltypes_rm_dup, file.path("data", sprintf("epimap-%s-hg19", mark), sprintf("all-celltypes-non-dup-%s.rds", mark)))
+  writeLines(celltypes_rm_dup, file.path("data", sprintf("epimap-%s-hg19", mark), sprintf("all-celltypes-non-dup-%s.txt", mark)))
 }
 
 ### SUBSET CHROMATIN SIGNAL DATA TO NON-DUPLICATING CELL TYPES
@@ -87,10 +87,10 @@ mcols(ATLAS_CHIP_qn) <- ATLAS_CHIP_df_qn
 mcols(ATLAS_CHIP) <- ATLAS_CHIP_df
 
 ### SAVE QUANTILE NORMALIZED ATLAS CHIP
-saveRDS(ATLAS_CHIP_qn, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), sprintf("FULL-EPIMAP-HG19-%s-QN.rds", mark)))
+saveRDS(ATLAS_CHIP_qn, file.path("data", sprintf("epimap-%s-hg19", mark), sprintf("FULL-EPIMAP-HG19-%s-QN.rds", mark)))
 
 ### OUTPUT QUANTILE NORMALIZED TRACKS 
-ATLAS_CHIP_qn <- readRDS(file.path("Correct_data", sprintf("epimap-%s-hg19", mark), sprintf("FULL-EPIMAP-HG19-%s-QN.rds", mark)))
+ATLAS_CHIP_qn <- readRDS(file.path("data", sprintf("epimap-%s-hg19", mark), sprintf("FULL-EPIMAP-HG19-%s-QN.rds", mark)))
 chr_list = paste0("chr", c(seq(1,22), "X"))
 dir.create(file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "qn-tracks"), recursive=TRUE)
 dir.create(file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "raw-tracks"), recursive=TRUE)
@@ -111,38 +111,20 @@ for (ct in celltypes_rm_dup){
     track_ss_raw <- track_raw[seqnames(track_raw) == chr,]
 
     if (use_wig){
-      rtracklayer::export.wig(track_ss_qn, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "qn-tracks-wig", sprintf("%s-%s-HG19-%s-QN.wig", ct, chr, mark)))
-      rtracklayer::export.wig(track_ss_raw, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "raw-tracks-wig", sprintf("%s-%s-HG19-%s-RAW.wig", ct, chr, mark)))
+      rtracklayer::export.wig(track_ss_qn, file.path("data", sprintf("epimap-%s-hg19", mark), "qn-tracks-wig", sprintf("%s-%s-HG19-%s-QN.wig", ct, chr, mark)))
+      rtracklayer::export.wig(track_ss_raw, file.path("data", sprintf("epimap-%s-hg19", mark), "raw-tracks-wig", sprintf("%s-%s-HG19-%s-RAW.wig", ct, chr, mark)))
     } else {
-      rtracklayer::export.bw(track_ss_qn, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "qn-tracks", sprintf("%s-%s-HG19-%s-QN.bw", ct, chr, mark)))
-      rtracklayer::export.bw(track_ss_raw, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "raw-tracks", sprintf("%s-%s-HG19-%s-RAW.bw", ct, chr, mark)))
+      rtracklayer::export.bw(track_ss_qn, file.path("data", sprintf("epimap-%s-hg19", mark), "qn-tracks", sprintf("%s-%s-HG19-%s-QN.bw", ct, chr, mark)))
+      rtracklayer::export.bw(track_ss_raw, file.path("data", sprintf("epimap-%s-hg19", mark), "raw-tracks", sprintf("%s-%s-HG19-%s-RAW.bw", ct, chr, mark)))
     }
   }
 
   if (use_wig){
-    rtracklayer::export.wig(track_qn, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "qn-tracks-wig", sprintf("%s-FULL-HG19-%s-QN.wig", ct, mark)))
-    rtracklayer::export.wig(track_raw, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "raw-tracks-wig", sprintf("%s-FULL-HG19-%s-RAW.wig", ct, mark)))
+    rtracklayer::export.wig(track_qn, file.path("data", sprintf("epimap-%s-hg19", mark), "qn-tracks-wig", sprintf("%s-FULL-HG19-%s-QN.wig", ct, mark)))
+    rtracklayer::export.wig(track_raw, file.path("data", sprintf("epimap-%s-hg19", mark), "raw-tracks-wig", sprintf("%s-FULL-HG19-%s-RAW.wig", ct, mark)))
   } else {
-    rtracklayer::export.bw(track_qn, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "qn-tracks", sprintf("%s-FULL-HG19-%s-QN.bw", ct, mark)))
-    rtracklayer::export.bw(track_raw, file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "raw-tracks", sprintf("%s-FULL-HG19-%s-RAW.bw", ct, mark)))
+    rtracklayer::export.bw(track_qn, file.path("data", sprintf("epimap-%s-hg19", mark), "qn-tracks", sprintf("%s-FULL-HG19-%s-QN.bw", ct, mark)))
+    rtracklayer::export.bw(track_raw, file.path("data", sprintf("epimap-%s-hg19", mark), "raw-tracks", sprintf("%s-FULL-HG19-%s-RAW.bw", ct, mark)))
   }
 
 }
-
-
-### OLD WAYS OF REMOVING DUPLICATES
-# chip_df <- as.data.frame(mcols(ATLAS_CHIP))
-
-# corr_mat <- cor(chip_df, chip_df) ## pairwise correlation
-
-# duplicated_ct <- list()
-
-# for(ct in celltypes_overlap){
-#   if(!(ct %in% duplicated_ct)){
-#     corr_ct = corr_mat[,ct]
-#     duplicates = celltypes_chip[which(corr_ct > 0.9)]
-#     duplicated_ct <- append(duplicated_ct, setdiff(duplicates, ct))
-#     duplicated_ct <- unique(duplicated_ct)
-#   }
-# }
-# celltypes_rm_dup <- setdiff(celltypes_overlap, duplicated_ct)
