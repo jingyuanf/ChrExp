@@ -92,10 +92,10 @@ saveRDS(ATLAS_CHIP_qn, file.path("data", sprintf("epimap-%s-hg19", mark), sprint
 ### OUTPUT QUANTILE NORMALIZED TRACKS 
 ATLAS_CHIP_qn <- readRDS(file.path("data", sprintf("epimap-%s-hg19", mark), sprintf("FULL-EPIMAP-HG19-%s-QN.rds", mark)))
 chr_list = paste0("chr", c(seq(1,22), "X"))
-dir.create(file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "qn-tracks"), recursive=TRUE)
-dir.create(file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "raw-tracks"), recursive=TRUE)
-dir.create(file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "qn-tracks-wig"), recursive=TRUE)
-dir.create(file.path("Correct_data", sprintf("epimap-%s-hg19", mark), "raw-tracks-wig"), recursive=TRUE)
+dir.create(file.path("data", sprintf("epimap-%s-hg19", mark), "qn-tracks"), recursive=TRUE)
+dir.create(file.path("data", sprintf("epimap-%s-hg19", mark), "raw-tracks"), recursive=TRUE)
+dir.create(file.path("data", sprintf("epimap-%s-hg19", mark), "qn-tracks-wig"), recursive=TRUE)
+dir.create(file.path("data", sprintf("epimap-%s-hg19", mark), "raw-tracks-wig"), recursive=TRUE)
 
 
 for (ct in celltypes_rm_dup){
