@@ -1,4 +1,4 @@
-ChrExp is a regression-based ensemble method that predicts chromatin signal from gene expression. This is the pipeline for evaluating ChromExp model and ChromImpute performance on EpiMap data. Notice that the example job submission code (.sh) files are based on the UCLA Hoffman2 Linux compute cluster. For other platforms, please adjust the submission code accordingly.
+ChromExp is a regression-based ensemble method that predicts chromatin signal from gene expression. This is the pipeline for evaluating ChromExp model and ChromImpute performance on EpiMap data. Notice that the example job submission code (.sh) files are based on the UCLA Hoffman2 Linux compute cluster. For other platforms, please adjust the submission code accordingly.
 
 ## Step 0: Specify your project directory
 
